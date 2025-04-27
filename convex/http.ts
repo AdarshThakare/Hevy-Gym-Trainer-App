@@ -108,6 +108,14 @@ function validateWorkoutPlan(plan: any) {
           typeof routine.reps === "number"
             ? routine.reps
             : parseInt(routine.reps) || 10,
+        duration:
+          typeof routine.duration === "number"
+            ? routine.duration
+            : parseInt(routine.reps) || 15,
+        description:
+          typeof routine.description === "string"
+            ? routine.description
+            : "not available",
       })),
     })),
   };
@@ -122,6 +130,7 @@ function validateDietPlan(plan: any) {
     meals: plan.meals.map((meal: any) => ({
       name: meal.name,
       foods: meal.foods,
+      protein: meal.protein,
     })),
   };
   return validatedPlan;
@@ -168,15 +177,17 @@ http.route({
       
       As a professional coach:
       - Consider muscle group splits to avoid overtraining the same muscles on consecutive days
+      - Allot approximate duration in minutes for each of the exercises. 
       - Design exercises that match the fitness level and account for any injuries
       - Structure the workouts to specifically target the user's fitness goal
       
       CRITICAL SCHEMA INSTRUCTIONS:
       - Your output MUST contain ONLY the fields specified below, NO ADDITIONAL FIELDS
-      - "sets" and "reps" MUST ALWAYS be NUMBERS, never strings
-      - For example: "sets": 3, "reps": 10
+      - "sets" , "reps" and "duration (in minutes)" MUST ALWAYS be NUMBERS, never strings
+      - For each exercise provide a brief information on what exactly to do in that exercise, as string.
+      - For example: "sets": 3, "reps": 10 , "duration" : 20
       - Do NOT use text like "reps": "As many as possible" or "reps": "To failure"
-      - Instead use specific numbers like "reps": 12 or "reps": 15
+      - Instead use specific numbers like "reps": 12 or "reps": 15 or "duration" : 30
       - For cardio, use "sets": 1, "reps": 1 or another appropriate number
       - NEVER include strings for numerical fields
       - NEVER add extra fields not shown in the example below
@@ -192,6 +203,8 @@ http.route({
                 "name": "Exercise Name",
                 "sets": 3,
                 "reps": 10
+                "duration" : 20,
+                "description" : "Description of the given exercise goes here."
               }
             ]
           }
@@ -218,6 +231,7 @@ http.route({
         - Calculate appropriate daily calorie intake based on the person's stats and goals
         - Create a balanced meal plan with proper macronutrient distribution
         - Include a variety of nutrient-dense foods while respecting dietary restrictions
+        - Also calculate the approximate protein present in each food item.
         - Consider meal timing around workouts for optimal performance and recovery
         
         CRITICAL SCHEMA INSTRUCTIONS:
@@ -234,10 +248,12 @@ http.route({
             {
               "name": "Breakfast",
               "foods": ["Oatmeal with berries", "Greek yogurt", "Black coffee"]
+              "protein" : [32,10,5]
             },
             {
               "name": "Lunch",
               "foods": ["Grilled chicken salad", "Whole grain bread", "Water"]
+              "protein" : [20,10,1]
             }
           ]
         }

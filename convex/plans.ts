@@ -15,6 +15,8 @@ export const createPlan = mutation({
               name: v.string(),
               sets: v.number(),
               reps: v.number(),
+              duration: v.number(),
+              description: v.string(),
             })
           ),
         })
@@ -26,6 +28,7 @@ export const createPlan = mutation({
         v.object({
           name: v.string(),
           foods: v.array(v.string()),
+          protein: v.array(v.number()),
         })
       ),
     }),

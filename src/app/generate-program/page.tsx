@@ -173,12 +173,28 @@ const GenerateProgramPage = () => {
                 } transition-opacity duration-300`}
               >
                 {/* Voice wave animation when speaking */}
-                <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-center items-center h-20">
+                <div className="absolute left-1/4  top-1/3 -translate-y-1/2 flex justify-center items-center h-20">
                   {[...Array(5)].map((_, i) => (
                     <div
                       key={i}
                       className={`mx-1 h-16 w-1 bg-primary rounded-full ${
                         isSpeaking ? "animate-sound-wave" : ""
+                      }`}
+                      style={{
+                        animationDelay: `${i * 0.1}s`,
+                        height: isSpeaking
+                          ? `${Math.random() * 50 + 20}%`
+                          : "5%",
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="absolute right-1/4  top-1/3 -translate-y-1/2 flex justify-center items-center h-20">
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`mx-1 h-16 w-1 bg-primary rounded-full ${
+                        isSpeaking ? "animate-sound-wave-reverse" : ""
                       }`}
                       style={{
                         animationDelay: `${i * 0.1}s`,
@@ -202,14 +218,14 @@ const GenerateProgramPage = () => {
                 <div className="relative w-full h-full rounded-full bg-card flex items-center justify-center border border-border overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-secondary/10"></div>
                   <img
-                    src="/ai-avatar.png"
+                    src="/beymax.png"
                     alt="AI Assistant"
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
 
-              <h2 className="text-xl font-bold text-foreground">CodeFlex AI</h2>
+              <h2 className="text-xl font-bold text-foreground">Hevy AI</h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Fitness & Diet Coach
               </p>
@@ -283,7 +299,7 @@ const GenerateProgramPage = () => {
               {messages.map((msg, index) => (
                 <div key={index} className="message-item animate-fadeIn">
                   <div className="font-semibold text-xs text-muted-foreground mb-1">
-                    {msg.role === "assistant" ? "CodeFlex AI" : "You"}:
+                    {msg.role === "assistant" ? "Hevy AI" : "You"}:
                   </div>
                   <p className="text-foreground">{msg.content}</p>
                 </div>
@@ -307,7 +323,7 @@ const GenerateProgramPage = () => {
         {/* CALL CONTROLS */}
         <div className="w-full flex justify-center gap-4">
           <Button
-            className={`w-40 text-xl rounded-3xl ${
+            className={` text-xl py-6 px-8 transition-all duration-200 rounded-[0.625rem] ${
               callActive
                 ? "bg-destructive hover:bg-destructive/90"
                 : callEnded
@@ -321,15 +337,52 @@ const GenerateProgramPage = () => {
               <span className="absolute inset-0 rounded-full animate-ping bg-primary/50 opacity-75"></span>
             )}
 
-            <span>
-              {callActive
-                ? "End Call"
-                : connecting
-                  ? "Connecting..."
-                  : callEnded
-                    ? "View Profile"
-                    : "Start Call"}
-            </span>
+            {callActive ? (
+              <div className="flex justofy-center items-center gap-4">
+                <div className="rotate-135">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    shape-rendering="geometricPrecision"
+                    text-rendering="geometricPrecision"
+                    image-rendering="optimizeQuality"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    viewBox="0 0 512 509.45"
+                  >
+                    <path
+                      fill="#fff"
+                      fill-rule="nonzero"
+                      d="M141 209.38c17.22 31.02 37.04 60.82 62.81 88.02 25.83 27.33 57.94 52.21 99.56 73.45 3.08 1.51 6.01 1.51 8.61.47 3.97-1.51 7.99-4.78 11.97-8.75 3.07-3.07 6.9-7.99 10.92-13.38 15.99-21.05 35.81-47.16 63.76-34.1.61.28 1.09.61 1.7.89l93.27 53.64c.28.14.61.47.9.61 12.3 8.47 17.36 21.52 17.5 36.28 0 15.04-5.53 31.97-13.67 46.26-10.74 18.87-26.58 31.35-44.84 39.63-17.35 7.99-36.7 12.3-55.29 15.04-29.18 4.3-56.51 1.56-84.47-7.05-27.34-8.46-54.86-22.42-84.94-41l-2.23-1.42c-13.81-8.61-28.71-17.83-43.32-28.71-53.59-40.44-108.12-98.8-143.64-163.03C9.81 212.31-6.47 154.09 2.43 98.61 7.34 68.2 20.4 40.53 43.15 22.27 62.97 6.28 89.69-2.46 124.26.61c3.98.28 7.52 2.6 9.37 6.01l59.78 101.07c8.75 11.35 9.84 22.56 5.06 33.82-3.97 9.22-11.96 17.68-22.89 25.63-3.22 2.74-7.05 5.53-11.07 8.47-13.38 9.69-28.57 20.9-23.36 34.1l-.15-.33z"
+                    />
+                  </svg>{" "}
+                </div>
+                <span className="font-mono text-lg">End Call</span>
+              </div>
+            ) : connecting ? (
+              <span className="font-mono text-lg">Connecting...</span>
+            ) : callEnded ? (
+              <span className="font-mono text-lg">View Profile</span>
+            ) : (
+              <div className="flex justofy-center items-center gap-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  shape-rendering="geometricPrecision"
+                  text-rendering="geometricPrecision"
+                  image-rendering="optimizeQuality"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  viewBox="0 0 512 509.45"
+                >
+                  <path
+                    fill="#fff"
+                    fill-rule="nonzero"
+                    d="M141 209.38c17.22 31.02 37.04 60.82 62.81 88.02 25.83 27.33 57.94 52.21 99.56 73.45 3.08 1.51 6.01 1.51 8.61.47 3.97-1.51 7.99-4.78 11.97-8.75 3.07-3.07 6.9-7.99 10.92-13.38 15.99-21.05 35.81-47.16 63.76-34.1.61.28 1.09.61 1.7.89l93.27 53.64c.28.14.61.47.9.61 12.3 8.47 17.36 21.52 17.5 36.28 0 15.04-5.53 31.97-13.67 46.26-10.74 18.87-26.58 31.35-44.84 39.63-17.35 7.99-36.7 12.3-55.29 15.04-29.18 4.3-56.51 1.56-84.47-7.05-27.34-8.46-54.86-22.42-84.94-41l-2.23-1.42c-13.81-8.61-28.71-17.83-43.32-28.71-53.59-40.44-108.12-98.8-143.64-163.03C9.81 212.31-6.47 154.09 2.43 98.61 7.34 68.2 20.4 40.53 43.15 22.27 62.97 6.28 89.69-2.46 124.26.61c3.98.28 7.52 2.6 9.37 6.01l59.78 101.07c8.75 11.35 9.84 22.56 5.06 33.82-3.97 9.22-11.96 17.68-22.89 25.63-3.22 2.74-7.05 5.53-11.07 8.47-13.38 9.69-28.57 20.9-23.36 34.1l-.15-.33z"
+                  />
+                </svg>
+
+                <span className="font-mono text-lg">Start Call</span>
+              </div>
+            )}
           </Button>
         </div>
       </div>

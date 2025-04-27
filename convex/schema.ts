@@ -22,7 +22,7 @@ export default defineSchema({
               name: v.string(),
               sets: v.optional(v.number()),
               reps: v.optional(v.number()),
-              duration: v.optional(v.string()),
+              duration: v.optional(v.number()),
               description: v.optional(v.string()),
               exercises: v.optional(v.array(v.string())),
             })
@@ -36,6 +36,7 @@ export default defineSchema({
         v.object({
           name: v.string(),
           foods: v.array(v.string()),
+          protein: v.array(v.number()),
         })
       ),
     }),
