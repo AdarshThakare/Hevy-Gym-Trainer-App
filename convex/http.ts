@@ -273,7 +273,7 @@ http.route({
         dietPlan,
         isActive: true,
         workoutPlan,
-        name: `${fitness_goal} Plan - ${new Date().toLocaleDateString()}`,
+        name: `${fitness_goal} Plan - ${new Date().toLocaleDateString()}`.toUpperCase(),
       });
 
       return new Response(

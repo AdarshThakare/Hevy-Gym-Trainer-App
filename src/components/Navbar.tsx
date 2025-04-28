@@ -17,7 +17,7 @@ const Navbar = () => {
             <ZapIcon className="w-4 h-4 text-primary" />
           </div>
           <span className="text-xl font-bold font-mono">
-            He<span className="text-primary">vy</span>.ai
+            Fit<span className="text-primary">max</span>.ai
           </span>
         </Link>
 

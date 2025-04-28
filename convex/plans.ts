@@ -64,3 +64,16 @@ export const getUserPlans = query({
     return plans;
   },
 });
+
+export const deleteUserPlan = mutation({
+  args: { planId: v.id("plans") },
+  handler: async (ctx, args) => {
+    const plan = await ctx.db.get(args.planId);
+
+    if (!plan) {
+      throw new Error("Plan Not found");
+    }
+
+    await ctx.db.delete(args.planId);
+  },
+});

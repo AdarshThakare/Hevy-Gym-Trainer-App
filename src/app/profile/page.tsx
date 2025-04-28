@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useEffect, useState } from "react";
 import ProfileHeader from "@/components/ProfileHeader";
@@ -10,12 +10,14 @@ import CornerElements from "@/components/CornerElements";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AppleIcon, CalendarIcon, DumbbellIcon } from "lucide-react";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { v } from "convex/values";
 
 const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +37,19 @@ const ProfilePage = () => {
     ? allPlans?.find((plan) => plan._id === selectedPlanId)
     : activePlan;
 
+  //delete plan section
+  const deletePlan = useMutation(api.plans.deleteUserPlan);
+
+  const handleDelete = async (planId: any) => {
+    if (confirm("Are you sure, you want to delete this plan?")) {
+      try {
+        await deletePlan({ planId });
+      } catch (err) {
+        console.log("Error deleting the plan : ", err);
+      }
+    }
+  };
+
   return (
     <section className="relative z-10 pt-12 pb-32 flex-grow container mx-auto px-4">
       <ProfileHeader user={user} />
@@ -50,7 +65,7 @@ const ProfilePage = () => {
                     <span className="text-primary">Your</span>{" "}
                     <span className="text-foreground">Fitness Plans</span>
                   </h2>
-                  <div className="font-mono text-xs text-muted-foreground">
+                  <div className="font-mono text-sm text-muted-foreground">
                     TOTAL: {allPlans.length}
                   </div>
                 </div>
@@ -72,6 +87,14 @@ const ProfilePage = () => {
                           ACTIVE
                         </span>
                       )}
+                      <button
+                        className="rotate-45 text-lg bg-transparent hover:text-black rounded-full px-1  text-white"
+                        onClick={() => {
+                          handleDelete(plan._id);
+                        }}
+                      >
+                        +
+                      </button>
                     </Button>
                   ))}
                 </div>
