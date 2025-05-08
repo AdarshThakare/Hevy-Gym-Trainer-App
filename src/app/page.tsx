@@ -2,6 +2,7 @@ import TerminalOverlay from "@/components/TerminalOverlay";
 import { Button } from "@/components/ui/button";
 import UserPrograms from "@/components/UserPrograms";
 import { ArrowRightIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -94,8 +95,10 @@ const HomePage = () => {
               {/* IMAGE CONTANINER */}
               <div className="relative aspect-square max-w-lg mx-auto">
                 <div className="relative bottom-14 overflow-hidden rounded-lg bg-cyber-black">
-                  <img
+                  <Image
                     src="/bodybuilding.png"
+                    width={250}
+                    height={250}
                     alt="AI Fitness Coach"
                     className="size-full object-contain object-center"
                   />

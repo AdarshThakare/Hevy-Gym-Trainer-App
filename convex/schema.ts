@@ -44,4 +44,22 @@ export default defineSchema({
   })
     .index("by_user_id", ["userId"])
     .index("by_active", ["isActive"]),
+
+  routines: defineTable({
+    userId: v.string(),
+    name: v.string(),
+    exercises: v.array(
+      v.object({
+        name: v.string(),
+        sets: v.array(
+          v.object({
+            type: v.string(),
+            // number: v.number();
+            weight: v.optional(v.string()),
+            reps: v.number(),
+          })
+        ),
+      })
+    ),
+  }),
 });

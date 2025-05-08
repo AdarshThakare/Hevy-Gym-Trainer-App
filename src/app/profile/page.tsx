@@ -17,7 +17,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { v } from "convex/values";
 
 const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -87,14 +86,14 @@ const ProfilePage = () => {
                           ACTIVE
                         </span>
                       )}
-                      <button
+                      <div
                         className="rotate-45 text-lg bg-transparent hover:text-black rounded-full px-1  text-white"
                         onClick={() => {
                           handleDelete(plan._id);
                         }}
                       >
                         +
-                      </button>
+                      </div>
                     </Button>
                   ))}
                 </div>
